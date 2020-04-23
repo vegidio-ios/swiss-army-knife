@@ -4,19 +4,35 @@
 import PackageDescription
 
 let package = Package(
-    name: "ios-armyknife",
+    name: "iOS-SAK",
     platforms: [
         .iOS(.v13),
+        .macOS(.v10_15),
     ],
     products: [
-        .library(name: "Extensions", targets: ["Extensions"]),
-        .library(name: "Network", targets: ["Network"]),
+        .library(name: "Network", targets: ["SAKNetwork"]),
+        .library(name: "Util", targets: ["SAKUtil"]),
     ],
     dependencies: [
-
+        .package(url: "https://github.com/Alamofire/Alamofire", .exact("5.1.0")),
+        .package(url: "https://github.com/fassko/Cache", .branch("master")),
+        .package(url: "https://github.com/ReactiveX/RxSwift", .exact("5.1.1")),
     ],
     targets: [
-        .target(name: "Extensions", dependencies: [], path: "Sources/Extensions"),
-        .target(name: "Network", dependencies: [], path: "Sources/Network"),
+        // Network
+        .target(
+            name: "SAKNetwork",
+            dependencies: ["Alamofire", "Cache", "RxSwift", "SAKUtil"],
+            path: "Sources/Network"),
+        .testTarget(
+            name: "SAKNetworkTests",
+            dependencies: ["SAKNetwork", "SAKUtil"],
+            path: "Tests/Network"),
+        
+        // Util
+        .target(
+            name: "SAKUtil",
+            dependencies: [],
+            path: "Sources/Util"),
     ]
 )

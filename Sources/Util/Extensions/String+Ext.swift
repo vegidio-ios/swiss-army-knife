@@ -12,7 +12,7 @@ import Foundation
 extension String
 {
     /// Returns a SHA256 hash of a given string
-    func sha256() -> String
+    public func sha256() -> String
     {
         var hash = ""
 
