@@ -1,27 +1,31 @@
-import XCTest
-import SAKNetwork
-import Combine
+//
+//  RestServiceCombineTest.swift
+//  iOS Swiss Army Knife
+//
+//  Created by Vinícius Egidio on 2020-04-25.
+//  Copyright © 2020 vinicius.io - All rights reserved.
+//
 
-final class RestFactoryCombineTest: XCTestCase
+import Combine
+import CombineExpectations
+import SAKNetwork
+import XCTest
+
+internal final class RestFactoryCombineTest: XCTestCase
 {
-    var restFactory: RestFactory!
-    
-    override func setUp()
-    {
-        restFactory = RestFactory().apply {
-            $0.cacheConfig = CacheConfig(10 * 1_024 * 1_024, 1, .day)
+    private let service: CountriesCombineService = {
+        let restFactory = RestFactory().apply {
+            let size10Mb: UInt = 10 * 1_024 * 1_024
+            $0.cacheConfig = CacheConfig(size10Mb, 1, .day)
         }
-    }
-    
+
+        return restFactory.create(clazz: CountriesCombineService.self)
+    }()
+
     func testOKResponse()
     {
-        let servive = restFactory.create(clazz: CountriesService.self)
-        
-        servive.getCountryBy(countryCode: "BR")
-            .subscribe(onSuccess: { country in
-                
-            }, onError: { error in
-                
-            }).disposed(by: bag)
+        let recorder = service.getCountryBy(countryCode: "BR").record()
+        let country = try! wait(for: recorder.next(), timeout: TimeInterval(5), description: "")
+        XCTAssertEqual(country.name, "Brazil")
     }
 }

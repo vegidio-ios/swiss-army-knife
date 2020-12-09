@@ -15,8 +15,8 @@ public enum RestError: Error
 
 open class RestService<R>
 {
-    internal var rest: RestFactory!
-    
+    internal var rest: RestFactory
+
     public required init(factory: RestFactory)
     {
         self.rest = factory

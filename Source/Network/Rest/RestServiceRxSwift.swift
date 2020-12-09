@@ -12,37 +12,29 @@ import RxSwift
 
 public typealias RxSwiftResponse = Observable<Any>
 
-extension RestService where R == RxSwiftResponse
+public extension RestService where R == RxSwiftResponse
 {
-    public func sendRequest(_ method: HTTPMethod, _ uri: String, parameters: Any? = nil) -> Completable
+    func sendRequest(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil) -> Completable
     {
-        guard let url = URL(string: uri) else {
-            return Completable.error(RestError.invalidUrl)
-        }
-
         let (request, _) = rest.createRequest(method, url, parameters)
 
         return Completable.create { observer in
-            let req = AF.request(request).responseData { res in
+            let req = request.responseData { res in
                 if let error = res.error {
                     observer(.error(RestError.unknown(error)))
                 } else {
                     observer(.completed)
                 }
             }
-            
+
             return Disposables.create {
                 req.cancel()
             }
         }
     }
-    
-    public func sendRequest<T: Codable>(_ method: HTTPMethod, _ uri: String, parameters: Any? = nil) -> Single<T>
-    {
-        guard let url = URL(string: uri) else {
-            return Single.error(RestError.invalidUrl)
-        }
 
+    func sendRequest<T: Codable>(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil) -> Single<T>
+    {
         let (request, key) = rest.createRequest(method, url, parameters)
 
         return Single<T>.create { observer in
@@ -59,20 +51,20 @@ extension RestService where R == RxSwiftResponse
 
             // Otherwise we send a new request to the service
             } else {
-                let req = AF.request(request).responseDecodable { (res: DataResponse<T, AFError>) in
+                let req = request.responseDecodable { (res: DataResponse<T, AFError>) in
                     if let error = res.error {
-                        observer(.error(RestError.unknown(error)))
-                        
+                        observer(.failure(RestError.unknown(error)))
+
                     } else if let value = res.value {
                         // Saving the result in the cache
                         if method == .get, let data = try? JSONEncoder().encode(value) {
                             try? self.rest.cache?.setObject(data, forKey: key)
                         }
-                        
+
                         observer(.success(value))
                     }
                 }
-                
+
                 return Disposables.create {
                     req.cancel()
                 }

@@ -12,19 +12,15 @@ import Foundation
 
 public typealias CombineResponse = AnyPublisher<Any, Error>
 
-extension RestService where R == CombineResponse
+public extension RestService where R == CombineResponse
 {
-    public func sendRequest(_ method: HTTPMethod, _ uri: String, parameters: Any? = nil)
-        -> AnyPublisher<Void, RestError>
+    func sendRequest(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil)
+            -> AnyPublisher<Void, RestError>
     {
-        guard let url = URL(string: uri) else {
-            return Fail<Void, RestError>(error: .invalidUrl).eraseToAnyPublisher()
-        }
-
         let (request, _) = rest.createRequest(method, url, parameters)
 
         return Future<Void, RestError> { promise in
-            AF.request(request).responseData { res in
+            request.responseData { res in
                 if let error = res.error {
                     promise(.failure(.unknown(error)))
                 } else {
@@ -34,13 +30,9 @@ extension RestService where R == CombineResponse
         }.eraseToAnyPublisher()
     }
 
-    public func sendRequest<T: Codable>(_ method: HTTPMethod, _ uri: String, parameters: Any? = nil)
+    func sendRequest<T: Codable>(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil)
         -> AnyPublisher<T, RestError>
     {
-        guard let url = URL(string: uri) else {
-            return Fail<T, RestError>(error: .invalidUrl).eraseToAnyPublisher()
-        }
-
         let (request, key) = rest.createRequest(method, url, parameters)
 
         return Future<T, RestError> { promise in
@@ -50,22 +42,22 @@ extension RestService where R == CombineResponse
 
             // Then if we have a cached value for that key, we use it...
             if let data = try? self.rest.cache?.object(forKey: key),
-                let value = try? JSONDecoder.decode(data, to: T.self)
+               let value = try? JSONDecoder.decode(data, to: T.self)
             {
                 promise(.success(value))
 
             // Otherwise we send a new request to the service
             } else {
-                AF.request(request).responseDecodable { (res: DataResponse<T, AFError>) in
+                request.responseDecodable { (res: DataResponse<T, AFError>) in
                     if let error = res.error {
                         promise(.failure(.unknown(error)))
-                        
+
                     } else if let value = res.value {
                         // Saving the result in the cache
                         if method == .get, let data = try? JSONEncoder().encode(value) {
                             try? self.rest.cache?.setObject(data, forKey: key)
                         }
-                        
+
                         promise(.success(value))
                     }
                 }

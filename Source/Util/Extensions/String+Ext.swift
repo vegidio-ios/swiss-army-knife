@@ -9,10 +9,10 @@
 import CryptoKit
 import Foundation
 
-extension String
+public extension String
 {
     /// Returns a SHA256 hash of a given string
-    public func sha256() -> String
+    func sha256() -> String
     {
         var hash = ""
 

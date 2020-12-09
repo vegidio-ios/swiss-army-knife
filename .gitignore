@@ -60,3 +60,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# IntelliJ
+.build
+.idea

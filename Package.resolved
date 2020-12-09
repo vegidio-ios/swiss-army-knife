@@ -6,17 +6,26 @@
         "repositoryURL": "https://github.com/Alamofire/Alamofire",
         "state": {
           "branch": null,
-          "revision": "fca036f7aeca07124067cb6e0c12b0ad6359e3d4",
-          "version": "5.1.0"
+          "revision": "9e0328127dfb801cefe8ac53a13c0c90a7770448",
+          "version": "5.4.0"
         }
       },
       {
         "package": "Cache",
-        "repositoryURL": "https://github.com/fassko/Cache",
+        "repositoryURL": "https://github.com/hyperoslo/Cache",
         "state": {
-          "branch": "master",
-          "revision": "fa7f1aadd88428d05ff3bfcf7096a10a3f888a18",
-          "version": null
+          "branch": null,
+          "revision": "c7f4d633049c3bd649a353bad36f6c17e9df085f",
+          "version": "6.0.0"
+        }
+      },
+      {
+        "package": "CombineExpectations",
+        "repositoryURL": "https://github.com/groue/CombineExpectations",
+        "state": {
+          "branch": null,
+          "revision": "96d5604151c94b21fbca6877b237e80af9e821dd",
+          "version": "0.5.0"
         }
       },
       {
@@ -24,8 +33,8 @@
         "repositoryURL": "https://github.com/ReactiveX/RxSwift",
         "state": {
           "branch": null,
-          "revision": "002d325b0bdee94e7882e1114af5ff4fe1e96afa",
-          "version": "5.1.1"
+          "revision": "97e14358a3e6564de8a6289362385a92d85936e1",
+          "version": "6.0.0-rc.2"
         }
       }
     ]
