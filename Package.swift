@@ -7,11 +7,11 @@ internal let package = Package(
     name: "iOS-SAK",
     platforms: [
         .iOS(.v13),
-        .macOS(.v10_15)
+        .macOS(.v10_15),
     ],
     products: [
         .library(name: "Network", targets: ["SAKNetwork"]),
-        .library(name: "Util", targets: ["SAKUtil"])
+        .library(name: "Util", targets: ["SAKUtil"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire", .exact("5.4.0")),
@@ -19,28 +19,31 @@ internal let package = Package(
         .package(url: "https://github.com/ReactiveX/RxSwift", .exact("6.0.0-rc.2")),
 
         // Test
-        .package(url: "https://github.com/groue/CombineExpectations", .exact("0.5.0"))
+        .package(url: "https://github.com/groue/CombineExpectations", .exact("0.5.0")),
     ],
     targets: [
         // Network
         .target(
             name: "SAKNetwork",
             dependencies: ["Alamofire", "Cache", "RxSwift", "SAKUtil"],
-            path: "Source/Network"),
+            path: "Source/Network"
+        ),
         .testTarget(
             name: "SAKNetworkTests",
             dependencies: [
                 "SAKNetwork",
                 "SAKUtil",
                 "CombineExpectations",
-                .product(name: "RxBlocking", package: "RxSwift")
+                .product(name: "RxBlocking", package: "RxSwift"),
             ],
-            path: "Tests/Network"),
+            path: "Tests/Network"
+        ),
 
         // Util
         .target(
             name: "SAKUtil",
             dependencies: [],
-            path: "Source/Util")
+            path: "Source/Util"
+        ),
     ]
 )

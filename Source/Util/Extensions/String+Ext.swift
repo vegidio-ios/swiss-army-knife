@@ -9,11 +9,9 @@
 import CryptoKit
 import Foundation
 
-public extension String
-{
+public extension String {
     /// Returns a SHA256 hash of a given string
-    func sha256() -> String
-    {
+    func sha256() -> String {
         var hash = ""
 
         if let data = self.data(using: .utf8) {

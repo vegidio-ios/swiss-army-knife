@@ -12,10 +12,9 @@ import Foundation
 
 public typealias CombineResponse = AnyPublisher<Any, Error>
 
-public extension RestService where R == CombineResponse
-{
-    func sendRequest(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil)
-            -> AnyPublisher<Void, RestError>
+public extension RestService where R == CombineResponse {
+    func sendRequest(_ method: HTTPMethod, _ url: String,
+                     parameters: Parameters? = nil) -> AnyPublisher<Void, RestError>
     {
         let (request, _) = rest.createRequest(method, url, parameters)
 
@@ -24,7 +23,7 @@ public extension RestService where R == CombineResponse
                 if let error = res.error {
                     promise(.failure(.unknown(error)))
                 } else {
-                    promise(.success(Void()))
+                    promise(.success(()))
                 }
             }
         }.eraseToAnyPublisher()
@@ -40,14 +39,14 @@ public extension RestService where R == CombineResponse
             // First we clear any cached objects that already expired
             try! self.rest.cache?.removeExpiredObjects()
 
-            // Then if we have a cached value for that key, we use it...
             if let data = try? self.rest.cache?.object(forKey: key),
                let value = try? JSONDecoder.decode(data, to: T.self)
             {
+                // Then if we have a cached value for that key, we use it...
                 promise(.success(value))
 
-            // Otherwise we send a new request to the service
             } else {
+                // Otherwise we send a new request to the service
                 request.responseDecodable { (res: DataResponse<T, AFError>) in
                     if let error = res.error {
                         promise(.failure(.unknown(error)))

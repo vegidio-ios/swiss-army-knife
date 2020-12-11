@@ -10,7 +10,7 @@
                BlueprintIdentifier = "iOS-SAK::SAKNetworkTests"
                BuildableName = "SAKNetworkTests.xctest"
                BlueprintName = "SAKNetworkTests"
-               ReferencedContainer = "container:iOS-SAK.xcodeproj">
+               ReferencedContainer = "container:ios-sak.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -24,7 +24,7 @@
                BlueprintIdentifier = "iOS-SAK::SAKNetworkTests"
                BuildableName = "SAKNetworkTests.xctest"
                BlueprintName = "SAKNetworkTests"
-               ReferencedContainer = "container:iOS-SAK.xcodeproj">
+               ReferencedContainer = "container:ios-sak.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

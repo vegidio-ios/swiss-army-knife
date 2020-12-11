@@ -12,10 +12,8 @@ import RxSwift
 
 public typealias RxSwiftResponse = Observable<Any>
 
-public extension RestService where R == RxSwiftResponse
-{
-    func sendRequest(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil) -> Completable
-    {
+public extension RestService where R == RxSwiftResponse {
+    func sendRequest(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil) -> Completable {
         let (request, _) = rest.createRequest(method, url, parameters)
 
         return Completable.create { observer in
@@ -33,8 +31,7 @@ public extension RestService where R == RxSwiftResponse
         }
     }
 
-    func sendRequest<T: Codable>(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil) -> Single<T>
-    {
+    func sendRequest<T: Codable>(_ method: HTTPMethod, _ url: String, parameters: Parameters? = nil) -> Single<T> {
         let (request, key) = rest.createRequest(method, url, parameters)
 
         return Single<T>.create { observer in
@@ -44,12 +41,12 @@ public extension RestService where R == RxSwiftResponse
 
             // Then if we have a cached value for that key, we use it...
             if let data = try? self.rest.cache?.object(forKey: key),
-                let value = try? JSONDecoder.decode(data, to: T.self)
+               let value = try? JSONDecoder.decode(data, to: T.self)
             {
                 observer(.success(value))
                 return Disposables.create()
 
-            // Otherwise we send a new request to the service
+                // Otherwise we send a new request to the service
             } else {
                 let req = request.responseDecodable { (res: DataResponse<T, AFError>) in
                     if let error = res.error {

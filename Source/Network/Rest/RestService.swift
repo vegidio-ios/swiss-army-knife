@@ -8,17 +8,15 @@
 
 import Foundation
 
-public enum RestError: Error
-{
-    case invalidUrl, unknown(Error)
+public enum RestError: Error {
+    case invalidUrl
+    case unknown(Error)
 }
 
-open class RestService<R>
-{
+open class RestService<R> {
     internal var rest: RestFactory
 
-    public required init(factory: RestFactory)
-    {
-        self.rest = factory
+    public required init(factory: RestFactory) {
+        rest = factory
     }
 }

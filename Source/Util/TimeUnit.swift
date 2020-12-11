@@ -8,11 +8,16 @@
 
 import Foundation
 
-public enum TimeUnit: Int
-{
-    case second = 1, minute = 60, hour = 3_600, day = 86_400, week = 604_800, month = 2_592_000, year = 31_536_000
+public enum TimeUnit: Int {
+    case second = 1
+    case minute = 60
+    case hour = 3_600
+    case day = 86_400
+    case week = 604_800
+    case month = 2_592_000
+    case year = 31_536_000
 
     func toSeconds(value: Int) -> Int {
-        self.rawValue * value
+        rawValue * value
     }
 }

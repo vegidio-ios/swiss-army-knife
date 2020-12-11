@@ -11,8 +11,7 @@ import CombineExpectations
 import SAKNetwork
 import XCTest
 
-internal final class RestFactoryCombineTest: XCTestCase
-{
+internal final class RestFactoryCombineTest: XCTestCase {
     private let service: CountriesCombineService = {
         let restFactory = RestFactory().apply {
             let size10Mb: UInt = 10 * 1_024 * 1_024
@@ -22,8 +21,7 @@ internal final class RestFactoryCombineTest: XCTestCase
         return restFactory.create(clazz: CountriesCombineService.self)
     }()
 
-    func testOKResponse()
-    {
+    func testOKResponse() {
         let recorder = service.getCountryBy(countryCode: "BR").record()
         let country = try! wait(for: recorder.next(), timeout: TimeInterval(5), description: "")
         XCTAssertEqual(country.name, "Brazil")

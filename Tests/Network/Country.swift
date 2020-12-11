@@ -8,21 +8,18 @@
 
 import Foundation
 
-internal class Country: Codable
-{
+internal class Country: Codable {
     var name: String?
     var alpha2Code: String?
     var capital: String?
 
-    enum CodingKeys: String, CodingKey
-    {
+    enum CodingKeys: String, CodingKey {
         case name
         case alpha2Code
         case capital
     }
 
-    required init(from decoder: Decoder) throws
-    {
+    required init(from decoder: Decoder) throws {
         let fields = try decoder.container(keyedBy: CodingKeys.self)
 
         name = try fields.decodeIfPresent(String.self, forKey: .name)

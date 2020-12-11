@@ -11,8 +11,7 @@ import RxSwift
 import SAKNetwork
 import XCTest
 
-internal final class RestServiceRxSwiftTest: XCTestCase
-{
+internal final class RestServiceRxSwiftTest: XCTestCase {
     private let service: CountriesRxSwiftService = {
         let restFactory = RestFactory().apply {
             let size10Mb: UInt = 10 * 1_024 * 1_024
@@ -22,8 +21,7 @@ internal final class RestServiceRxSwiftTest: XCTestCase
         return restFactory.create(clazz: CountriesRxSwiftService.self)
     }()
 
-    func testOKResponse()
-    {
+    func testOKResponse() {
         let observable = service.getCountryBy(countryCode: "BR")
         let country = try! observable.toBlocking(timeout: TimeInterval(5)).single()
         XCTAssertEqual(country.name, "Brazil")

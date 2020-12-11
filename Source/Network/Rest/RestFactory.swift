@@ -13,22 +13,19 @@ import SAKUtil
 
 public typealias CacheConfig = (UInt, Int, TimeUnit)
 
-public class RestFactory
-{
+public class RestFactory {
     public var headers = HTTPHeaders()
     public var cacheConfig: CacheConfig?
     internal var cache: Storage<String, Data>?
 
     public init() {}
 
-    public func apply(closure: (RestFactory) -> Void) -> Self
-    {
+    public func apply(closure: (RestFactory) -> Void) -> Self {
         closure(self)
         return self
     }
 
-    public func create<R, T: RestService<R>>(clazz: T.Type) -> T
-    {
+    public func create<R, T: RestService<R>>(clazz _: T.Type) -> T {
         // Setting the cache
         if let (size, time, unit) = cacheConfig {
             let seconds = TimeInterval(time * unit.rawValue)
@@ -45,8 +42,7 @@ public class RestFactory
 
     // MARK: - Private Functions
 
-    private func defaultHeaders()
-    {
+    private func defaultHeaders() {
         headers["Content-Type"] = "application/json"
     }
 
