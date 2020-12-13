@@ -12,14 +12,10 @@ import SAKNetwork
 import XCTest
 
 internal final class RestFactoryCombineTest: XCTestCase {
-    private let service: CountriesCombineService = {
-        let restFactory = RestFactory().apply {
-            let size10Mb: UInt = 10 * 1_024 * 1_024
-            $0.cacheConfig = CacheConfig(size10Mb, 1, .day)
-        }
-
-        return restFactory.create(clazz: CountriesCombineService.self)
-    }()
+    private let service = CountriesCombineService().apply {
+        let size10Mb: UInt = 10 * 1_024 * 1_024
+        $0.cacheConfig = CacheConfig(size10Mb, 1, .day)
+    }
 
     func testOKResponse() {
         let recorder = service.getCountryBy(countryCode: "BR").record()

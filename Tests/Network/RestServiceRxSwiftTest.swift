@@ -12,14 +12,10 @@ import SAKNetwork
 import XCTest
 
 internal final class RestServiceRxSwiftTest: XCTestCase {
-    private let service: CountriesRxSwiftService = {
-        let restFactory = RestFactory().apply {
-            let size10Mb: UInt = 10 * 1_024 * 1_024
-            $0.cacheConfig = CacheConfig(size10Mb, 1, .day)
-        }
-
-        return restFactory.create(clazz: CountriesRxSwiftService.self)
-    }()
+    private let service = CountriesRxSwiftService().apply {
+        let size10Mb: UInt = 10 * 1_024 * 1_024
+        $0.cacheConfig = CacheConfig(size10Mb, 1, .day)
+    }
 
     func testOKResponse() {
         let observable = service.getCountryBy(countryCode: "BR")
