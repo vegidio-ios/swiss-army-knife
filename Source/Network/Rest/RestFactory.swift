@@ -21,8 +21,13 @@ open class RestFactory<R> {
     internal var cache: Storage<String, Data>?
     public var headers = HTTPHeaders()
     public var cacheConfig: CacheConfig?
+    public var encoder = JSONEncoder()
+    public var decoder = JSONDecoder()
 
-    public init() {}
+    public init() {
+        encoder.dateEncodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .iso8601
+    }
 
     public func apply(closure: (RestFactory) -> Void) -> Self {
         closure(self)

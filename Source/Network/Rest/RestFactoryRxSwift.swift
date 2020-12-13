@@ -41,7 +41,7 @@ public extension RestFactory where R == RxSwiftResponse {
 
             // Then if we have a cached value for that key, we use it...
             if let data = try? self.cache?.object(forKey: key),
-               let value = try? JSONDecoder.decode(data, to: T.self)
+               let value = try? self.decoder.decode(T.self, from: data)
             {
                 observer(.success(value))
                 return Disposables.create()
@@ -54,7 +54,7 @@ public extension RestFactory where R == RxSwiftResponse {
 
                     } else if let value = res.value {
                         // Saving the result in the cache
-                        if method == .get, let data = try? JSONEncoder().encode(value) {
+                        if method == .get, let data = try? self.encoder.encode(value) {
                             try? self.cache?.setObject(data, forKey: key)
                         }
 

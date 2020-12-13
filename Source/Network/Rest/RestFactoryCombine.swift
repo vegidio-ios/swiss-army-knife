@@ -38,7 +38,7 @@ public extension RestFactory where R == CombineResponse {
             try! self.cache?.removeExpiredObjects()
 
             if let data = try? self.cache?.object(forKey: key),
-               let value = try? JSONDecoder.decode(data, to: T.self)
+               let value = try? self.decoder.decode(T.self, from: data)
             {
                 // Then if we have a cached value for that key, we use it...
                 promise(.success(value))
@@ -51,7 +51,7 @@ public extension RestFactory where R == CombineResponse {
 
                     } else if let value = res.value {
                         // Saving the result in the cache
-                        if method == .get, let data = try? JSONEncoder().encode(value) {
+                        if method == .get, let data = try? self.encoder.encode(value) {
                             try? self.cache?.setObject(data, forKey: key)
                         }
 
