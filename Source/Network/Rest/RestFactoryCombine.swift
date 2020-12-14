@@ -45,7 +45,7 @@ public extension RestFactory where R == CombineResponse {
 
             } else {
                 // Otherwise we send a new request to the service
-                request.responseDecodable { (res: DataResponse<T, AFError>) in
+                request.responseDecodable(decoder: self.decoder) { (res: DataResponse<T, AFError>) in
                     if let error = res.error {
                         promise(.failure(error))
 

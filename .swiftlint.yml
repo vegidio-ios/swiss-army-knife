@@ -1,7 +1,7 @@
 included:
   - Source
   - Tests
-enabled_rules:
+opt_in_rules:
   - anyobject_protocol
   - array_init
   - attributes
@@ -16,7 +16,6 @@ enabled_rules:
   - colon
   - comma
   - compiler_protocol_init
-  - conditional_returns_on_newline
   - contains_over_filter_count
   - contains_over_filter_is_empty
   - contains_over_first_not_nil
@@ -72,6 +71,7 @@ enabled_rules:
   - vertical_parameter_alignment
   - vertical_parameter_alignment_on_call
 disabled_rules:
+  - conditional_returns_on_newline
   - force_try
   - no_extension_access_modifier
   - opening_brace
@@ -86,7 +86,7 @@ file_header:
                     \/\/  Created by .*? on \d{4}-\d{2}-\d{2}\.
                     \/\/  Copyright © \d{4} vinicius.io - All rights reserved\.
                     \/\/
-variable_name:
+identifier_name:
   min_length: 3
   excluded:
     - i

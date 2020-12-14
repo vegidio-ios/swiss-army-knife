@@ -48,7 +48,7 @@ public extension RestFactory where R == RxSwiftResponse {
 
                 // Otherwise we send a new request to the service
             } else {
-                let req = request.responseDecodable { (res: DataResponse<T, AFError>) in
+                let req = request.responseDecodable(decoder: self.decoder) { (res: DataResponse<T, AFError>) in
                     if let error = res.error {
                         observer(.failure(error))
 

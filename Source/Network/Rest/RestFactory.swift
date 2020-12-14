@@ -26,7 +26,7 @@ open class RestFactory<R> {
 
     public init() {
         encoder.dateEncodingStrategy = .iso8601
-        decoder.dateDecodingStrategy = .iso8601
+        decoder.dateDecodingStrategy = .iso8601Complete
     }
 
     public func apply(closure: (RestFactory) -> Void) -> Self {

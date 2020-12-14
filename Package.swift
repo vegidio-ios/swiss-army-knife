@@ -45,5 +45,12 @@ internal let package = Package(
             dependencies: [],
             path: "Source/Util"
         ),
+        .testTarget(
+            name: "SAKUtilTests",
+            dependencies: [
+                "SAKUtil",
+            ],
+            path: "Tests/Util"
+        ),
     ]
 )

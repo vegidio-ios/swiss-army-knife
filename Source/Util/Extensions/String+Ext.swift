@@ -14,7 +14,7 @@ public extension String {
     func sha256() -> String {
         var hash = ""
 
-        if let data = self.data(using: .utf8) {
+        if let data = data(using: .utf8) {
             let digest = SHA256.hash(data: data)
             let bytes = Array(digest.makeIterator())
             hash = bytes.map { String(format: "%02X", $0) }.joined()
