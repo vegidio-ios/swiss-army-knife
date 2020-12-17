@@ -1,5 +1,5 @@
 //
-//  String+Crypto.swift
+//  String+Ext.swift
 //  iOS Swiss Army Knife
 //
 //  Created by Vinícius Egidio on 2019-12-01.
