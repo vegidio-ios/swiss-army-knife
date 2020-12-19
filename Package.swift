@@ -12,6 +12,7 @@ internal let package = Package(
     products: [
         .library(name: "Network", targets: ["SAKNetwork"]),
         .library(name: "Util", targets: ["SAKUtil"]),
+        .library(name: "View", targets: ["SAKView"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire", .exact("5.4.0")),
@@ -51,6 +52,13 @@ internal let package = Package(
                 "SAKUtil",
             ],
             path: "Tests/Util"
+        ),
+
+        // View
+        .target(
+            name: "SAKView",
+            dependencies: [],
+            path: "Source/View"
         ),
     ]
 )
