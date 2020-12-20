@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+/// Lazily initialize a view, allocation its dependencies when a view is presented for the first time. Useful with
+/// NavigationLink.
 public struct LazyView<Content: View>: View {
     private let build: () -> Content
 
